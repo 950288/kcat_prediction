@@ -1,6 +1,7 @@
 from zeep import Client
 import hashlib
 import os
+import time
 
 prev_path = os.getcwd()
 
@@ -20,14 +21,25 @@ credentials = (email, password)
 
 client = Client(wsdl)
 
-ECstring = client.service.getEcNumbersFromTurnoverNumber(*credentials)
-print(ECstring)
+EClist = client.service.getEcNumbersFromTurnoverNumber(*credentials)
+print(EClist)
 
-# for EC in ECstring:
-#     print(EC)
-#     client.service.getTurnoverNumber(*credentials,"ecNumber*" + EC, "turnoverNumber*", "turnoverNumberMaximum*", "substrate*", "commentary*", "organism*", "ligandStructureId*", "literature*")
-#     # KcatString = [{'EC': Kcat['EC'],'substrate': Kcat['substrate'], 'Kcat': Kcat['turnoverNumber']} for Kcat in KcatString]
-#     print(KcatString)
+# time.sleep(1)
+
+# while succes < 10:
+#     try:
+#         Kcat = client.service.getTurnoverNumber(*credentials,"ecNumber*3.6.1.56", "turnoverNumber*", "substrate*", "organism*")
+#         print(Kcat)
+#         succes = 10
+        
+#     except:
+#         time.sleep(1)
+#         succes += 1
+
+for ECnumber in EClist:
+    print(ECnumber)
+    client.service.getTurnoverNumber(*credentials,"ecNumber*" + ECnumber, "turnoverNumber*", "turnoverNumberMaximum*", "substrate*", "commentary*", "organism*", "ligandStructureId*", "literature*")
+    print(KcatString)
 
 # print (ECstring)
 
